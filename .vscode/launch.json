@@ -5,7 +5,7 @@
             "name": "F5 Anything: Custom Command",
             "type": "f5anything",
             "request": "launch",
-            "command": "start debug.bat",
+            "command": "debug.bat",
             "terminalName": "F5 Anything",
             "terminalIndex": -1,
             "showTerminal": true

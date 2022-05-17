@@ -1,2 +1,1 @@
-start build.bat
-start run.bat
+build.bat && run.bat

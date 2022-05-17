@@ -1,22 +1,12 @@
 #include <iostream>
-#include "SFML/Graphics.hpp"
+#include "automaton.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(100, 100), "Cellular Automaton");
-    sf::CircleShape shape(50.0f);
-    shape.setFillColor(sf::Color::Green);
+    Automaton automaton(100, 100);
+    
+    automaton.updateSpriteSize();
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    automaton.start();
 
     return 0;
 }

@@ -1,2 +1,1 @@
-start build\main.exe
-pause
+build\main.exe
