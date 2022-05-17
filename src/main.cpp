@@ -2,8 +2,8 @@
 #include "SFML/Graphics.hpp"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-    sf::CircleShape shape(100.f);
+    sf::RenderWindow window(sf::VideoMode(100, 100), "Cellular Automaton");
+    sf::CircleShape shape(50.0f);
     shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen()) {

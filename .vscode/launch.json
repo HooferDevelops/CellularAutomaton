@@ -1,3 +1,14 @@
 {
-    
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "F5 Anything: Custom Command",
+            "type": "f5anything",
+            "request": "launch",
+            "command": "start debug.bat",
+            "terminalName": "F5 Anything",
+            "terminalIndex": -1,
+            "showTerminal": true
+        }
+    ]
 }

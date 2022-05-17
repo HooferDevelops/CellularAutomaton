@@ -1,2 +1,2 @@
-run build.bat
-run run.bat
+start build.bat
+start run.bat
