@@ -22,6 +22,13 @@ void Grid::setSize(int w, int h) {
     for (int i = 0; i < width; i++) {
         grid[i].resize(height);
     }
+
+    // Write blank cells to the grid
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            grid[i][j] = new Cell(i, j);
+        }
+    }
 }
 
 tuple<int, int> Grid::getSize() {
@@ -29,7 +36,11 @@ tuple<int, int> Grid::getSize() {
 }
 
 Cell *Grid::getCell(int x, int y) {
-    return &grid[x][y];
+    // Check if the coordinates are valid
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+        return nullptr;
+    }
+    return grid[x][y];
 }
 
 void Grid::setCell(int x, int y, Cell *cell) {
@@ -41,13 +52,10 @@ void Grid::setCell(int x, int y, Cell *cell) {
     Grid *oldGrid = cell->getGrid();
 
     if (oldGrid != nullptr) {
-        std::cout << "Cell already has a grid" << std::endl;
-        std::cout << cell->getX() << " " << cell->getY() << std::endl;
-        std::cout << cell->getGrid()->height;
-        oldGrid->setCell(cell->getX(), cell->getY(), nullptr);
+        //oldGrid->setCell(cell->getX(), cell->getY(), nullptr);
     }
 
-    grid[x][y] = *cell;
+    grid[x][y] = cell;
 
     cell->setX(x);
     cell->setY(y);
@@ -57,7 +65,28 @@ void Grid::setCell(int x, int y, Cell *cell) {
 void Grid::writeToImage(sf::Image *img) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            img->setPixel(i, j, getCell(i, j)->getColor());
+            if (getCell(i, j) != nullptr) {
+                img->setPixel(i, j, getCell(i, j)->getColor());
+            }
+        }
+    }
+}
+
+void Grid::update() {
+    vector<Cell *> cellsToUpdate;
+    cellsToUpdate.resize(width * height);
+
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            if (getCell(i, j) != nullptr) {
+                cellsToUpdate[i * height + j] = getCell(i, j);
+            }
+        }
+    }
+
+    for (unsigned int i = cellsToUpdate.size(); i > 0; i--) {
+        if (cellsToUpdate[i] != nullptr) {
+            cellsToUpdate[i]->update();
         }
     }
 }

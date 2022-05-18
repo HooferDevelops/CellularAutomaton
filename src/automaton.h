@@ -12,6 +12,8 @@ class Automaton {
         sf::Texture mainTexture;
         sf::Sprite mainSprite;
 
+        sf::Clock clock;
+
         Grid *grid;
     public:
         Automaton(int w, int h);

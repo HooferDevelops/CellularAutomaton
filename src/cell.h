@@ -6,11 +6,12 @@
 class Grid;
 
 class Cell {
-    private:
+    protected:
         int x;
         int y;
-        sf::Color color = sf::Color::White;
+        sf::Color color = sf::Color::Black;
         Grid *activeGrid = nullptr;
+        bool isFalling = false;
     public:
         // Constructors
         Cell();
@@ -20,16 +21,18 @@ class Cell {
         // Getters
         int getX();
         int getY();
-        sf::Color getColor();
-        Grid *getGrid();
+        virtual sf::Color getColor();
+        virtual Grid *getGrid();
+        virtual std::string getName();
 
         // Setters
-        void setX(int ix);
-        void setY(int iy);
-        void setColor(sf::Color color); 
-        void setGrid(Grid *grid);
+        virtual void setX(int ix);
+        virtual void setY(int iy);
+        virtual void setColor(sf::Color color); 
+        virtual void setGrid(Grid *grid);
 
         // Methods
+        virtual void update();
 };
 
 #endif

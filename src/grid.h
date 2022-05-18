@@ -13,7 +13,7 @@ class Grid {
     private:
         int width;
         int height;
-        vector<vector<Cell>> grid;
+        vector<vector<Cell*>> grid;
     public:
         // Constructors
         Grid(int w, int h);
@@ -29,6 +29,7 @@ class Grid {
 
         // Methods
         void writeToImage(sf::Image *tex);
+        void update();
 };
 
 #endif

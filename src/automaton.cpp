@@ -1,5 +1,8 @@
 #include "automaton.h"
 #include "grid.h"
+#include "sand.h"
+#include "cellgenerator.h"
+#include <iostream>
 
 Automaton::Automaton(int w, int h) {
     window.create(sf::VideoMode(w, h), "Cellular Automaton");
@@ -14,6 +17,7 @@ Automaton::~Automaton() {
 }
 
 void Automaton::update() {
+    grid->update();
     grid->writeToImage(&mainImage);
     mainTexture.loadFromImage(mainImage);
     mainSprite.setTexture(mainTexture);
@@ -35,7 +39,22 @@ void Automaton::updateSpriteSize() {
 }
 
 void Automaton::start() {
+    float dt = 1.f/30.f;
+    float time = 0.f;
+    bool drawn = false;
+
+    CellGenerator sand(1,1);
+
+    grid->setCell(5, 5, &sand);
+
+    CellGenerator sand1(1,1);
+
+    grid->setCell(8, 5, &sand1);
+
     while (window.isOpen()) {
+        time += clock.getElapsedTime().asSeconds();
+        clock.restart();
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -49,7 +68,21 @@ void Automaton::start() {
             }
         }
 
-        update();
+        while (time >= dt) {
+            update();
+            time -= dt;
+            drawn = false;
+        }
+
+        if (!drawn) {
+            window.clear();
+            window.draw(mainSprite);
+            window.display();
+            drawn = true;
+        } else {
+            sf::sleep(sf::milliseconds(1));
+        }
+
 
         window.clear();
         window.draw(mainSprite);

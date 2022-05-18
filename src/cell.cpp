@@ -41,10 +41,18 @@ int Cell::getY() {
     return y;
 }
 
+std::string Cell::getName() {
+    return "Air";
+}
+
 void Cell::setGrid(Grid *grid) {
     activeGrid = grid;
 }
 
 Grid *Cell::getGrid() {
     return activeGrid;
+}
+
+void Cell::update() {
+
 }
