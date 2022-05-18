@@ -1,7 +1,6 @@
-#ifndef SAND_H
-#define SAND_H
+#pragma once
 
-#include "cell.h"
+#include "cells/cell.h"
 #include <SFML/Graphics.hpp>
 
 class Sand: public Cell {
@@ -10,5 +9,3 @@ class Sand: public Cell {
         void update();
         std::string getName();
 };
-
-#endif

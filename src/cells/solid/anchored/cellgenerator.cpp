@@ -1,6 +1,6 @@
 #include "cellgenerator.h"
 #include "grid.h"
-#include "sand.h"
+#include "cells/solid/powder/sand.h"
 
 #include <iostream>
 

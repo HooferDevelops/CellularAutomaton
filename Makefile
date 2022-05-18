@@ -1,2 +1,4 @@
+CPP_FILES := $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/*/*/*.cpp) $(wildcard src/*/*/*/*.cpp) $(wildcard src/*/*/*/*/*.cpp)
+
 all:
-	g++ -g D:\Unity\CellularAutomaton\src\* -o build\main1.exe -DSFML_STATIC -I"D:\Unity\CellularAutomaton\dependencies\SFML\include" -L"D:\Unity\CellularAutomaton\dependencies\SFML\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -static-libgcc -static-libstdc++
+	g++ -g $(CPP_FILES) -o build\main.exe -DSFML_STATIC -I"dependencies\SFML\include" -I"src" -L"dependencies\SFML\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -static-libgcc -static-libstdc++ -static

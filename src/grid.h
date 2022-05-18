@@ -1,5 +1,4 @@
-#ifndef GRID_H
-#define GRID_H
+#pragma once
 
 class Cell;
 #include <SFML/Graphics.hpp>
@@ -31,5 +30,3 @@ class Grid {
         void writeToImage(sf::Image *tex);
         void update();
 };
-
-#endif

@@ -1,5 +1,5 @@
 #include "grid.h"
-#include "cell.h"
+#include "cells/cell.h"
 #include <iostream>
 
 Grid::Grid(int w = 10, int h = 10) {
@@ -84,7 +84,7 @@ void Grid::update() {
         }
     }
 
-    for (unsigned int i = cellsToUpdate.size(); i > 0; i--) {
+    for (int i = cellsToUpdate.size() - 1; i > 0; i--) {
         if (cellsToUpdate[i] != nullptr) {
             cellsToUpdate[i]->update();
         }

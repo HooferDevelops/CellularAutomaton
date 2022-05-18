@@ -1,7 +1,7 @@
 #ifndef CELLGENERATOR_H
 #define CELLGENERATOR_H
 
-#include "cell.h"
+#include "cells/cell.h"
 #include <SFML/Graphics.hpp>
 
 class CellGenerator: public Cell {

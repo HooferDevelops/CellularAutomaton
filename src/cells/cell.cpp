@@ -1,5 +1,6 @@
 #include "cell.h"
 #include "grid.h"
+#include <iostream>
 
 Cell::Cell() {
     x = 0;
@@ -54,5 +55,4 @@ Grid *Cell::getGrid() {
 }
 
 void Cell::update() {
-
 }

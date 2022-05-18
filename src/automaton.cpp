@@ -1,7 +1,7 @@
 #include "automaton.h"
 #include "grid.h"
-#include "sand.h"
-#include "cellgenerator.h"
+#include "cells/solid/powder/sand.h"
+#include "cells/solid/anchored/cellgenerator.h"
 #include <iostream>
 
 Automaton::Automaton(int w, int h) {

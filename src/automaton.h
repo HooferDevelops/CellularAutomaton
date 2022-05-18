@@ -1,5 +1,4 @@
-#ifndef AUTOMATON_H
-#define AUTOMATON_H
+#pragma once
 
 #include <SFML/Graphics.hpp>
 
@@ -33,5 +32,3 @@ class Automaton {
 
         void start();
 };
-
-#endif
