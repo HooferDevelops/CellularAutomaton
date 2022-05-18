@@ -56,7 +56,7 @@ add_library(sfml-system STATIC IMPORTED)
 set_target_properties(sfml-system PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:winmm>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>;\$<LINK_ONLY:winmm>"
 )
 
 # Create imported target sfml-main
@@ -65,6 +65,7 @@ add_library(sfml-main STATIC IMPORTED)
 set_target_properties(sfml-main PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>"
 )
 
 # Create imported target sfml-window
@@ -73,7 +74,7 @@ add_library(sfml-window STATIC IMPORTED)
 set_target_properties(sfml-window PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "sfml-system;\$<LINK_ONLY:OpenGL>;\$<LINK_ONLY:winmm>;\$<LINK_ONLY:gdi32>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>;sfml-system;\$<LINK_ONLY:OpenGL>;\$<LINK_ONLY:winmm>;\$<LINK_ONLY:gdi32>"
 )
 
 # Create imported target OpenGL
@@ -85,7 +86,7 @@ add_library(sfml-network STATIC IMPORTED)
 set_target_properties(sfml-network PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "sfml-system;\$<LINK_ONLY:ws2_32>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>;sfml-system;\$<LINK_ONLY:ws2_32>"
 )
 
 # Create imported target sfml-graphics
@@ -94,7 +95,7 @@ add_library(sfml-graphics STATIC IMPORTED)
 set_target_properties(sfml-graphics PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "sfml-window;\$<LINK_ONLY:OpenGL>;\$<LINK_ONLY:Freetype>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>;sfml-window;\$<LINK_ONLY:OpenGL>;\$<LINK_ONLY:Freetype>"
 )
 
 # Create imported target Freetype
@@ -123,7 +124,7 @@ add_library(sfml-audio STATIC IMPORTED)
 set_target_properties(sfml-audio PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS "SFML_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:OpenAL>;sfml-system;\$<LINK_ONLY:Vorbis>;\$<LINK_ONLY:FLAC>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-static-libgcc>;\$<LINK_ONLY:-static-libstdc++>;\$<LINK_ONLY:OpenAL>;sfml-system;\$<LINK_ONLY:Vorbis>;\$<LINK_ONLY:FLAC>"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)
