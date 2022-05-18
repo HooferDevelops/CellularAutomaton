@@ -2,7 +2,7 @@
 #include "automaton.h"
 
 int main() {
-    Automaton automaton(100, 100);
+    Automaton automaton(150, 150);
     
     automaton.updateSpriteSize();
 

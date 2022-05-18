@@ -16,7 +16,17 @@ Automaton::~Automaton() {
     delete grid;
 }
 
+void Automaton::mousePlacementCheck() {
+    if (leftMouseDown) {
+        grid->setCell(mouseX, mouseY, new Sand(mouseX, mouseY));
+    }
+    if (rightMouseDown) {
+        grid->setCell(mouseX, mouseY, new Cell(mouseX, mouseY));
+    }
+}
+
 void Automaton::update() {
+    mousePlacementCheck();
     grid->update();
     grid->writeToImage(&mainImage);
     mainTexture.loadFromImage(mainImage);
@@ -32,14 +42,44 @@ void Automaton::updateSpriteSize() {
     float highestRatio = widthRatio < heightRatio ? widthRatio : heightRatio;
     mainSprite.setScale(highestRatio, highestRatio);
     // Center the sprite
-    mainSprite.setPosition(
-        (window.getSize().x - mainSprite.getGlobalBounds().width) / 2,
-        (window.getSize().y - mainSprite.getGlobalBounds().height) / 2
-    );
+    //mainSprite.setPosition(
+    //    (window.getSize().x - mainSprite.getGlobalBounds().width) / 2,
+    //    (window.getSize().y - mainSprite.getGlobalBounds().height) / 2
+    //);
+}
+
+void Automaton::updateMousePosition() {
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    mouseX = mousePos.x;
+    mouseY = mousePos.y;
+    
+    float widthRatio = window.getSize().x / (float)mainImage.getSize().x;
+    float heightRatio = window.getSize().y / (float)mainImage.getSize().y;
+    float highestRatio = widthRatio < heightRatio ? widthRatio : heightRatio;
+
+    mouseX = (mouseX - mainSprite.getGlobalBounds().left) / highestRatio;
+    mouseY = (mouseY - mainSprite.getGlobalBounds().top) / highestRatio;
+
+    // Clamp the mouse position to the window
+    if (mouseX < 0) {
+        mouseX = 0;
+    }
+
+    if (mouseY < 0) {
+        mouseY = 0;
+    }
+
+    if (mouseX >= mainImage.getSize().x) {
+        mouseX = mainImage.getSize().x - 1;
+    }
+
+    if (mouseY >= mainImage.getSize().y) {
+        mouseY = mainImage.getSize().y - 1;
+    }
 }
 
 void Automaton::start() {
-    float dt = 1.f/30.f;
+    float dt = 1.f/60.f;
     float time = 0.f;
     bool drawn = false;
 
@@ -47,9 +87,10 @@ void Automaton::start() {
 
     grid->setCell(5, 5, &sand);
 
-    CellGenerator sand1(1,1);
-
-    grid->setCell(8, 5, &sand1);
+    // Create a row of sand
+    for (int i = 0; i < 50; i++) {
+        //grid->setCell(i+25, 1, new CellGenerator(i, 0));
+    }
 
     while (window.isOpen()) {
         time += clock.getElapsedTime().asSeconds();
@@ -66,7 +107,31 @@ void Automaton::start() {
 
                 updateSpriteSize();
             }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    leftMouseDown = true;
+                }
+                if (event.mouseButton.button == sf::Mouse::Right) {
+                    rightMouseDown = true;
+                }
+            }
+
+            if (event.type == sf::Event::MouseButtonReleased) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    leftMouseDown = false;
+                }
+                if (event.mouseButton.button == sf::Mouse::Right) {
+                    rightMouseDown = false;
+                }
+            }
         }
+
+        updateMousePosition();
+        //mouseX = window.mapPixelToCoords(sf::Mouse::getPosition(window)).x;
+        //mouseY = window.mapPixelToCoords(sf::Mouse::getPosition(window)).y;
+
+        std::cout << mouseX << " " << mouseY << std::endl;
 
         while (time >= dt) {
             update();
@@ -82,7 +147,6 @@ void Automaton::start() {
         } else {
             sf::sleep(sf::milliseconds(1));
         }
-
 
         window.clear();
         window.draw(mainSprite);

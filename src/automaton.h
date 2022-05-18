@@ -14,7 +14,14 @@ class Automaton {
 
         sf::Clock clock;
 
+        bool leftMouseDown = false;
+        bool rightMouseDown = false;
+        int mouseX = 0;
+        int mouseY = 0;
+
         Grid *grid;
+
+        void mousePlacementCheck();
     public:
         Automaton(int w, int h);
         ~Automaton();
@@ -22,6 +29,7 @@ class Automaton {
         void update();
         void updateSpriteSize();
         void draw(sf::RenderWindow &window);
+        void updateMousePosition();
 
         void start();
 };
