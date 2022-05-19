@@ -6,9 +6,18 @@
 
 class CellGenerator: public Cell {
     public:
+        // Constructors
         CellGenerator(int ix, int iy);
-        void update();
+
+        // Getters
         std::string getName();
+
+        // Setters
+
+        // Methods
+        void update();
+
+        // Variables
         std::string generatorType = "Sand";
 };
 

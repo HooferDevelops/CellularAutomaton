@@ -56,3 +56,27 @@ Grid *Cell::getGrid() {
 
 void Cell::update() {
 }
+
+int Cell::getTemperature() {
+    return temperature;
+}
+
+void Cell::setTemperature(int temp) {
+    temperature = temp;
+}
+
+int Cell::getVelocityX() {
+    return velocityX;
+}
+
+int Cell::getVelocityY() {
+    return velocityY;
+}
+
+void Cell::setVelocityX(int ix) {
+    velocityX = ix;
+}
+
+void Cell::setVelocityY(int iy) {
+    velocityY = iy;
+}

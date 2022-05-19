@@ -5,7 +5,14 @@
 
 class Sand: public Cell {
     public:
+        // Constructors
         Sand(int ix, int iy);
-        void update();
+
+        // Getters
         std::string getName();
+
+        // Setters
+
+        // Methods
+        void update();
 };

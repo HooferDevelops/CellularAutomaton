@@ -26,7 +26,6 @@ void Automaton::mousePlacementCheck() {
 }
 
 void Automaton::update() {
-    mousePlacementCheck();
     grid->update();
     grid->writeToImage(&mainImage);
     mainTexture.loadFromImage(mainImage);
@@ -79,13 +78,13 @@ void Automaton::updateMousePosition() {
 }
 
 void Automaton::start() {
-    float dt = 1.f/60.f;
+    float dt = 1.f/30.f;
     float time = 0.f;
     bool drawn = false;
 
-    CellGenerator sand(1,1);
+    //CellGenerator sand(1,1);
 
-    grid->setCell(5, 5, &sand);
+    //grid->setCell(5, 5, &sand);
 
     // Create a row of sand
     for (int i = 0; i < 50; i++) {
@@ -132,6 +131,8 @@ void Automaton::start() {
         //mouseY = window.mapPixelToCoords(sf::Mouse::getPosition(window)).y;
 
         std::cout << mouseX << " " << mouseY << std::endl;
+
+        mousePlacementCheck();
 
         while (time >= dt) {
             update();
