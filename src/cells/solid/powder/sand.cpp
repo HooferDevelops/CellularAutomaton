@@ -84,8 +84,6 @@ void Sand::update() {
             currentX += slopeRun;
             currentY += slopeRise;
 
-            std::cout << slopeRise << std::endl;
-
             if (grid->getCell((int) currentX, (int) currentY) != nullptr && grid->getCell((int) currentX, (int) currentY)->getName() != "Air") {
                 // If the cell is solid, stop moving the cell
                 velocityX = 0;
