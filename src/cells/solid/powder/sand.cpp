@@ -29,64 +29,84 @@ void Sand::update() {
         Cell *bottomRight = grid->getCell(x+1, y+1);
         Cell *bottom = grid->getCell(x, y+1);
 
+        // Check if bottom cell is air
+        // If it is, apply gravity to the sand
         if (bottom != nullptr && bottom->getName() == "Air") {
-            // Add gravity to velocity
-            velocityY = -1;
+            velocityY -= 0.1;
+        }
+        
+        // Limit velocity to a maximum of 3
+        if (abs(velocityX) > 3) {
+            velocityX = 3 * (velocityX / abs(velocityX));
+        }
+
+        // Apply air resistance
+        velocityX *= 0.99;
+        velocityY *= 0.99;
+
+        // Check if bottom left cell is air
+        // If it is, apply sliding to the sand
+        // If not, check if bottom right cell is air
+        if (bottom != nullptr && bottom->getName() != "Air" && bottomLeft != nullptr && bottomLeft->getName() == "Air") {
+            velocityX -= .01;
+        } else if (bottom != nullptr && bottom->getName() != "Air" && bottomRight != nullptr && bottomRight->getName() == "Air") {
+            velocityX += .01;
         }
 
         // Move cell in direction of velocity
         // Calculate slope of velocity
-        int finalX = x + velocityX;
-        int finalY = y - velocityY;
 
-        // Calculate distance between new positon and old position
-        int distance = sqrt(pow(finalX - x, 2) + pow(finalY - y, 2));
+        if (velocityX == 0 && velocityY == 0) {
+            return;
+        }
+        
+        float currentX = x, currentY = y;
+        float velocityResultX = currentX + velocityX, velocityResultY = currentY - velocityY;
+        float slopeRun = (velocityResultX - currentX), slopeRise = (velocityResultY - currentY);
+        float max = std::max(std::fabs(slopeRun), std::fabs(slopeRise));
 
-        int slope = (finalX-x) == 0 ? 1 : (finalY-y) / (finalX-x);
+        // Check if the line is horizontal or vertical
+        if (slopeRun == 0 && slopeRise != 0) {
+            max = slopeRise;
+            slopeRise /= std::fabs(slopeRise);
+        } else if (slopeRise == 0 && slopeRun != 0) {
+            max = slopeRun;
+            slopeRun /= std::fabs(slopeRun);
+        } else if (slopeRun != 0 && slopeRise != 0) {
+            slopeRun /= max;
+            slopeRise /= max;
+        }
+        
 
-        // Use a for loop to move the cell in the direction of the velocity
-        for (int newX = x; newX <= finalX; newX++) {
-            int newY = slope*(newX-x) + y;
+        int resultX = x, resultY = y;
 
-            std::cout << "newX: " << newX << " newY: " << newY << std::endl;
-            // Check if the cell is solid
-            if (grid->getCell(newX, newY) != nullptr && grid->getCell(newX, newY)->getName() != "Air") {
+        for (float n = 0; n <= std::fabs(max); n++) {
+            currentX += slopeRun;
+            currentY += slopeRise;
+
+            std::cout << slopeRise << std::endl;
+
+            if (grid->getCell((int) currentX, (int) currentY) != nullptr && grid->getCell((int) currentX, (int) currentY)->getName() != "Air") {
                 // If the cell is solid, stop moving the cell
-                std::cout << "Cell is solid" << std::endl;
+                velocityX = 0;
+                velocityY = 0;
+                break;
+            } else if (grid->getCell((int) currentX, (int) currentY) == nullptr) {
+                velocityX = 0;
+                velocityY = 0;
                 break;
             }
-            
-            // Check if the cell is air
-            if (grid->getCell(newX, newY) != nullptr && grid->getCell(newX, newY)->getName() == "Air") {
+
+            if (grid->getCell((int) currentX, (int) currentY) != nullptr && grid->getCell((int) currentX, (int) currentY)->getName() == "Air") {
                 // If the cell is air, move the cell
-                grid->setCell(x, y, new Cell(x, y));
-                grid->setCell(newX, newY, this);
-                x = newX;
-                y = newY;
+                resultX = (int) currentX;
+                resultY = (int) currentY;
             }
         }
 
-        /*if (bottom != nullptr && bottom->getName() == "Air") {
-            isFalling = true;
+        if (resultX != x || resultY != y) {
             grid->setCell(x, y, new Cell(x, y));
-            grid->setCell(x, y+1, this);
-            return;
-        }*/
-
-        /*if (bottomLeft != nullptr && bottomLeft->getName() == "Air") {
-            isFalling = true;
-            grid->setCell(x, y, new Cell(x, y));
-            grid->setCell(x-1, y+1, this);
-            return;
+            grid->setCell(resultX, resultY, this);
         }
-
-        if (bottomRight != nullptr && bottomRight->getName() == "Air") {
-            isFalling = true;
-            grid->setCell(x, y, new Cell(x, y));
-            grid->setCell(x+1, y+1, this);
-            return;
-        }
-
-        isFalling = false;*/
     }
 }

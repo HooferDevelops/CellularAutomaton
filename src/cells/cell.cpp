@@ -65,18 +65,18 @@ void Cell::setTemperature(int temp) {
     temperature = temp;
 }
 
-int Cell::getVelocityX() {
+float Cell::getVelocityX() {
     return velocityX;
 }
 
-int Cell::getVelocityY() {
+float Cell::getVelocityY() {
     return velocityY;
 }
 
-void Cell::setVelocityX(int ix) {
+void Cell::setVelocityX(float ix) {
     velocityX = ix;
 }
 
-void Cell::setVelocityY(int iy) {
+void Cell::setVelocityY(float iy) {
     velocityY = iy;
 }

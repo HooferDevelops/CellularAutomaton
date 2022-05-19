@@ -10,12 +10,11 @@ class Cell {
         int y;
         sf::Color color = sf::Color::Black;
         Grid *activeGrid = nullptr;
-        bool isFalling = false;
 
         int temperature = 0;
 
-        int velocityX = 0;
-        int velocityY = 0;
+        float velocityX = 0;
+        float velocityY = 0;
     public:
         // Constructors
         Cell();
@@ -31,8 +30,8 @@ class Cell {
 
         virtual int getTemperature();
 
-        virtual int getVelocityX();
-        virtual int getVelocityY();
+        virtual float getVelocityX();
+        virtual float getVelocityY();
 
 
         // Setters
@@ -41,10 +40,10 @@ class Cell {
         virtual void setColor(sf::Color color); 
         virtual void setGrid(Grid *grid);
 
-        virtual void setTemperature(int temp);
+        virtual void setTemperature(int temperature);
 
-        virtual void setVelocityX(int ix);
-        virtual void setVelocityY(int iy);
+        virtual void setVelocityX(float velocityX);
+        virtual void setVelocityY(float velocityY);
 
         // Methods
         virtual void update();

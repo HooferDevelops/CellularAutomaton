@@ -78,13 +78,13 @@ void Automaton::updateMousePosition() {
 }
 
 void Automaton::start() {
-    float dt = 1.f/30.f;
+    float dt = 1.f/60.f;
     float time = 0.f;
     bool drawn = false;
 
-    //CellGenerator sand(1,1);
+    Sand sand(1,1);
 
-    //grid->setCell(5, 5, &sand);
+    grid->setCell(5, 5, &sand);
 
     // Create a row of sand
     for (int i = 0; i < 50; i++) {
@@ -130,12 +130,11 @@ void Automaton::start() {
         //mouseX = window.mapPixelToCoords(sf::Mouse::getPosition(window)).x;
         //mouseY = window.mapPixelToCoords(sf::Mouse::getPosition(window)).y;
 
-        std::cout << mouseX << " " << mouseY << std::endl;
-
-        mousePlacementCheck();
+        //std::cout << mouseX << " " << mouseY << std::endl;
 
         while (time >= dt) {
             update();
+            mousePlacementCheck();
             time -= dt;
             drawn = false;
         }
