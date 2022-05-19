@@ -47,10 +47,20 @@ void Sand::update() {
         // Check if bottom left cell is air
         // If it is, apply sliding to the sand
         // If not, check if bottom right cell is air
-        if (bottom != nullptr && bottom->getName() != "Air" && bottomLeft != nullptr && bottomLeft->getName() == "Air") {
-            velocityX -= .01;
-        } else if (bottom != nullptr && bottom->getName() != "Air" && bottomRight != nullptr && bottomRight->getName() == "Air") {
-            velocityX += .01;
+        if (velocityY == 0 && bottom != nullptr && bottom->getName() != "Air") {
+            bool checkLeftFirst = rand() % 2 == 0;
+
+            for (int i = 0; i < 1; i++) {
+                if ((i != 0 || checkLeftFirst) && bottomLeft != nullptr && bottomLeft->getName() == "Air") {
+                    velocityX -= .01;
+                    break;
+                }
+                
+                if ((i == 0 || !checkLeftFirst) && bottomRight != nullptr && bottomRight->getName() == "Air") {
+                    velocityX += .01;
+                    break;
+                }
+            }
         }
 
         // Move cell in direction of velocity
