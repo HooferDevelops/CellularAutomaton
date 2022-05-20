@@ -1,33 +1,32 @@
-#include "sand.h"
+#include "water.h"
 #include "grid.h"
 
 #include <iostream>
-#include <cmath>
 
-Sand::Sand(int ix, int iy) : GravityCell(ix, iy) {
+Water::Water(int ix, int iy) : LiquidCell(ix, iy) {
     sf::Color colorOptions[3] = {
-        sf::Color(238, 216, 156),
-        sf::Color(231, 209, 151),
-        sf::Color(243, 222, 166)
+        sf::Color(110, 219, 255),
+        sf::Color(110, 204, 255),
+        sf::Color(57, 167, 250)
     };
 
     color = colorOptions[rand() % 3];
 }
 
-std::string Sand::getName() {
-    return "Sand";
+std::string Water::getName() {
+    return "Water";
 }
 
-void Sand::update() {
+void Water::update() {
     if (activeGrid != nullptr) {
         Grid *grid = activeGrid;
 
-        
-        
         // Bottom left and bottom right cells
         Cell *bottomLeft = grid->getCell(x-1, y+1);
         Cell *bottomRight = grid->getCell(x+1, y+1);
         Cell *bottom = grid->getCell(x, y+1);
+        Cell *left = grid->getCell(x-1, y);
+        Cell *right = grid->getCell(x+1, y);
 
         // Check if bottom cell is air
         // If it is, apply gravity to the sand
@@ -52,12 +51,22 @@ void Sand::update() {
 
             for (int i = 0; i < 1; i++) {
                 if ((i != 0 || checkLeftFirst) && bottomLeft != nullptr && bottomLeft->getName() == "Air") {
-                    velocityX -= .01;
+                    velocityX -= 1;
                     break;
                 }
                 
                 if ((i == 0 || !checkLeftFirst) && bottomRight != nullptr && bottomRight->getName() == "Air") {
-                    velocityX += .01;
+                    velocityX += 1;
+                    break;
+                }
+
+                if ((i != 0 || checkLeftFirst) && left != nullptr && left->getName() == "Air") {
+                    velocityX -= 1;
+                    break;
+                }
+
+                if ((i == 0 || !checkLeftFirst) && right != nullptr && right->getName() == "Air") {
+                    velocityX += 1;
                     break;
                 }
             }

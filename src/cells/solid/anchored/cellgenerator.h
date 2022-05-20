@@ -15,6 +15,7 @@ class CellGenerator: public Cell {
         // Setters
 
         // Methods
+        virtual CellGenerator* clone() const { return new CellGenerator(0,0); }
         void update();
 
         // Variables

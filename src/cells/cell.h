@@ -12,9 +12,6 @@ class Cell {
         Grid *activeGrid = nullptr;
 
         int temperature = 0;
-
-        float velocityX = 0;
-        float velocityY = 0;
     public:
         // Constructors
         Cell();
@@ -27,12 +24,9 @@ class Cell {
         virtual sf::Color getColor();
         virtual Grid *getGrid();
         virtual std::string getName();
+        virtual std::string getVariant();
 
         virtual int getTemperature();
-
-        virtual float getVelocityX();
-        virtual float getVelocityY();
-
 
         // Setters
         virtual void setX(int ix);
@@ -42,9 +36,7 @@ class Cell {
 
         virtual void setTemperature(int temperature);
 
-        virtual void setVelocityX(float velocityX);
-        virtual void setVelocityY(float velocityY);
-
         // Methods
+        virtual Cell* clone() const { return new Cell(); }
         virtual void update();
 };

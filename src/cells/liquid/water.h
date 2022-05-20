@@ -1,12 +1,12 @@
 #pragma once
 
-#include "cells/solid/gravitycell.h"
+#include "cells/liquid/liquidcell.h"
 #include <SFML/Graphics.hpp>
 
-class Sand: public GravityCell {
+class Water: public LiquidCell {
     public:
         // Constructors
-        Sand(int ix, int iy);
+        Water(int ix, int iy);
 
         // Getters
         std::string getName();
@@ -14,6 +14,6 @@ class Sand: public GravityCell {
         // Setters
 
         // Methods
-        virtual Sand* clone() const { return new Sand(0,0); }
+        virtual Water* clone() const { return new Water(0,0); }
         void update();
 };

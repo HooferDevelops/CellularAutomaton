@@ -1,8 +1,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <memory>
 
 class Grid;
+class Cell;
 
 class Automaton {
     private:
@@ -17,6 +20,10 @@ class Automaton {
         bool rightMouseDown = false;
         int mouseX = 0;
         int mouseY = 0;
+
+        int activeCellSelectionId = 0;
+
+        std::vector<Cell*> cellSelection;
 
         Grid *grid;
 

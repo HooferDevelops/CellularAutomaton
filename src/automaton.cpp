@@ -1,7 +1,10 @@
 #include "automaton.h"
 #include "grid.h"
+#include "cells/cell.h"
 #include "cells/solid/powder/sand.h"
 #include "cells/solid/anchored/cellgenerator.h"
+#include "cells/liquid/water.h"
+
 #include <iostream>
 
 Automaton::Automaton(int w, int h) {
@@ -10,6 +13,10 @@ Automaton::Automaton(int w, int h) {
     mainTexture.loadFromImage(mainImage);
     mainSprite.setTexture(mainTexture);
     grid = new Grid(w, h);
+    
+    cellSelection.push_back(new Sand(0, 0));
+    cellSelection.push_back(new Water(0, 0));
+    cellSelection.push_back(new CellGenerator(0, 0));
 }
 
 Automaton::~Automaton() {
@@ -18,7 +25,8 @@ Automaton::~Automaton() {
 
 void Automaton::mousePlacementCheck() {
     if (leftMouseDown) {
-        grid->setCell(mouseX, mouseY, new Sand(mouseX, mouseY));
+        Cell *newCell = cellSelection[activeCellSelectionId]->clone();
+        grid->setCell(mouseX, mouseY, newCell);
     }
     if (rightMouseDown) {
         grid->setCell(mouseX, mouseY, new Cell(mouseX, mouseY));
@@ -124,6 +132,7 @@ void Automaton::start() {
                     rightMouseDown = false;
                 }
             }
+
         }
 
         updateMousePosition();
@@ -131,6 +140,11 @@ void Automaton::start() {
         //mouseY = window.mapPixelToCoords(sf::Mouse::getPosition(window)).y;
 
         //std::cout << mouseX << " " << mouseY << std::endl;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
+            // Shuffle the cell selection and reset to the first cell in the array
+            activeCellSelectionId = (activeCellSelectionId + 1) % cellSelection.size();
+        }
 
         while (time >= dt) {
             update();

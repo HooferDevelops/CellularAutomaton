@@ -65,18 +65,6 @@ void Cell::setTemperature(int temp) {
     temperature = temp;
 }
 
-float Cell::getVelocityX() {
-    return velocityX;
-}
-
-float Cell::getVelocityY() {
-    return velocityY;
-}
-
-void Cell::setVelocityX(float ix) {
-    velocityX = ix;
-}
-
-void Cell::setVelocityY(float iy) {
-    velocityY = iy;
+std::string Cell::getVariant() {
+    return "Air";
 }
